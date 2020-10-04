@@ -19,12 +19,12 @@ export default function Home({ userObj }) {
   const onSubmit = async (event) => {
     event.preventDefault();
     let attachmentUrl = "";
-    if (attachment != "") {
+    if (attachment !== "") {
       const attachmentRef = storageService
         .ref()
         .child(`${userObj.uid}/${uuidv4()}`);
       const response = await attachmentRef.putString(attachment, "data_url");
-      const attachmentUrl = await response.ref.getDownloadURL();
+      attachmentUrl = await response.ref.getDownloadURL();
     }
     const nweetObj = {
       text: nweet,
