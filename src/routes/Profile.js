@@ -2,7 +2,7 @@ import { authService, dbService } from "fbase";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
-export default function Profile({ userObj }) {
+export default function Profile({ userObj, refreshUser }) {
   const history = useHistory();
   const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
   const onLogOutClick = () => {
@@ -21,6 +21,7 @@ export default function Profile({ userObj }) {
       await userObj.updateProfile({
         displayName: newDisplayName,
       });
+      refreshUser();
     }
   };
   return (
