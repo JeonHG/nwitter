@@ -3,6 +3,7 @@ import React from "react";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import EpochConverter from "./EpochConverter";
 
 const Nweet = ({ nweetObj, isOwner }) => {
   const [editing, setEditing] = useState(false);
@@ -54,10 +55,11 @@ const Nweet = ({ nweetObj, isOwner }) => {
         </>
       ) : (
         <>
+          <h6>{EpochConverter(nweetObj.createdAt)}</h6>
           <h4>{nweetObj.text}</h4>
           {nweetObj.attachmentUrl && <img src={nweetObj.attachmentUrl} />}
           {isOwner && (
-            <div class="nweet__actions">
+            <div className="nweet__actions">
               <span onClick={onDeleteClick}>
                 <FontAwesomeIcon icon={faTrash} />
               </span>
