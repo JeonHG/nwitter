@@ -57,7 +57,11 @@ const Nweet = ({ nweetObj, isOwner }) => {
         <>
           <h6>{EpochConverter(nweetObj.createdAt)}</h6>
           <h4>{nweetObj.text}</h4>
-          {nweetObj.attachmentUrl && <img src={nweetObj.attachmentUrl} />}
+          {nweetObj.attachmentUrl && (
+            <a href={nweetObj.attachmentUrl}>
+              <img src={nweetObj.attachmentUrl} />
+            </a>
+          )}
           {isOwner && (
             <div className="nweet__actions">
               <span onClick={onDeleteClick}>
