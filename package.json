@@ -21,7 +21,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "babel src -d lib",
+    "build": "react-scripts build",
     "eject": "react-scripts eject"
   },
   "homepage": "https://nwitter.netlify.app/",
