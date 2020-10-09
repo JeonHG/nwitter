@@ -11,6 +11,7 @@ function App() {
         setUserObj({
           displayName: user.displayName,
           uid: user.uid,
+          photoURL: user.photoURL,
           updateProfile: (args) => user.updateProfile(args),
         });
       } else {
@@ -24,6 +25,7 @@ function App() {
     setUserObj({
       displayName: user.displayName,
       uid: user.uid,
+      photoURL: user.photoURL,
       updateProfile: (args) => user.updateProfile(args),
     });
   };
@@ -38,7 +40,7 @@ function App() {
       ) : (
         "Initializing..."
       )}
-      <footer>&copy; {new Date().getFullYear()}</footer>
+      <footer>&copy; {new Date().getFullYear()} Laplace Transform</footer>
     </>
   );
 }
