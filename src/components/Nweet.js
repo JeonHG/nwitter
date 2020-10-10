@@ -67,15 +67,20 @@ const Nweet = ({ nweetObj, isOwner }) => {
         </>
       ) : (
         <>
+          <img
+            src={creatorObj.photoURL}
+            alt=""
+            className="nweet__profile__img"
+          />
           <h6 className="nweet__creator">{creatorObj.displayName}</h6>
-          <h4 className="nweet__createdAt">
+          <h6 className="nweet__createdAt">
             {EpochConverter(nweetObj.createdAt)}
-          </h4>
+          </h6>
           <h2 className="nweet__text">{nweetObj.text}</h2>
           <h6>{nweetObj.creatorId.displayName}</h6>
           {nweetObj.attachmentUrl && (
             <a href={nweetObj.attachmentUrl}>
-              <img src={nweetObj.attachmentUrl} />
+              <img src={nweetObj.attachmentUrl} className="nweet__img" />
             </a>
           )}
           {isOwner && (

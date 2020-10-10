@@ -146,7 +146,7 @@ form {
 
 .factoryInput__arrow {
   position: absolute;
-  right: 0;
+  right: -25px;
   background-color: #04aaff;
   height: 40px;
   width: 40px;
@@ -211,18 +211,38 @@ form {
   color: rgba(0, 0, 0, 0.8);
 }
 
-.nweet h4 {
-  font-size: 14px;
+.nweet__text {
+  font-size: 20px;
 }
 
-.nweet img {
-  right: -10px;
-  top: 20px;
-  position: absolute;
+.nweet__creator {
+  font-size: 10px;
+  color: rgba(0, 0, 0, 0.7);
+  margin-bottom: 5px;
+}
+
+.nweet__createdAt {
+  font-size: 8px;
+  margin-bottom: 5px;
+}
+
+.nweet__profile__img {
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  margin-top: 10px;
+  left: -50px;
+  top: 0px;
+  position: absolute;
+}
+
+.nweet__img {
+  right: -100px;
+  top: 0px;
+  position: absolute;
+  border-radius: 10%;
+  width: 90px;
+  height: 90px;
+  margin-top: 0px;
 }
 
 .nweet__actions {
