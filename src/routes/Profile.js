@@ -4,8 +4,11 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import Nweet from "components/Nweet";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPencilAlt,
+  faTimes,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function Profile({ userObj, refreshUser }) {
   const [nweets, setNweets] = useState([]);
@@ -62,7 +65,9 @@ export default function Profile({ userObj, refreshUser }) {
       refreshUser();
     }
     if (attachment) {
-      await storageService.refFromURL(userObj.photoURL).delete();
+      if (userObj.photoURL) {
+        await storageService.refFromURL(userObj.photoURL).delete();
+      }
 
       const photoURLRef = storageService
         .ref()
@@ -80,7 +85,7 @@ export default function Profile({ userObj, refreshUser }) {
   return (
     <div className="container">
       <div className="profilePhoto">
-        {!attachment && (
+        {!attachment && userObj.photoURL && (
           <a href={userObj.photoURL}>
             <img src={userObj.photoURL} />
           </a>
@@ -88,8 +93,17 @@ export default function Profile({ userObj, refreshUser }) {
       </div>
       <form onSubmit={onSubmit} className="profileForm">
         <label htmlFor="attach-file" className="factoryInput__label">
-          <span>Change photos</span>
-          <FontAwesomeIcon icon={faPencilAlt} />
+          {userObj.photoURL ? (
+            <>
+              <span>Change Photo</span>
+              <FontAwesomeIcon icon={faPencilAlt} />
+            </>
+          ) : (
+            <>
+              <span>Add Photo</span>
+              <FontAwesomeIcon icon={faPlus} />
+            </>
+          )}
         </label>
         <input
           id="attach-file"

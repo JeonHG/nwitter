@@ -29,6 +29,7 @@ const Nweet = ({ nweetObj, isOwner }) => {
     } = event;
     setNewNweet(value);
   };
+
   return (
     <div className="nweet">
       {editing ? (
@@ -57,6 +58,7 @@ const Nweet = ({ nweetObj, isOwner }) => {
         <>
           <h6>{EpochConverter(nweetObj.createdAt)}</h6>
           <h4>{nweetObj.text}</h4>
+          <h6>{nweetObj.creatorId.displayName}</h6>
           {nweetObj.attachmentUrl && (
             <a href={nweetObj.attachmentUrl}>
               <img src={nweetObj.attachmentUrl} />
