@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { authService } from "fbase";
+import { authService, dbService } from "fbase";
 
 const AuthForm = () => {
-  const [email, setEmail] = useState("");
+  const [inputEmail, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [newAccount, setNewAccount] = useState(true);
   const [error, setError] = useState("");
@@ -10,7 +10,7 @@ const AuthForm = () => {
     const {
       target: { name, value },
     } = event;
-    if (name === "email") {
+    if (name === "inputEmail") {
       setEmail(value);
     } else if (name === "password") {
       setPassword(value);
@@ -22,13 +22,20 @@ const AuthForm = () => {
       let data;
       if (newAccount) {
         data = await authService.createUserWithEmailAndPassword(
-          email,
+          inputEmail,
           password
         );
       } else {
-        data = await authService.signInWithEmailAndPassword(email, password);
+        data = await authService.signInWithEmailAndPassword(
+          inputEmail,
+          password
+        );
       }
-      console.log(data);
+      const {
+        user: { email, uid, photoURL, displayName },
+      } = data;
+      const userObj = { email, uid, photoURL, displayName };
+      await dbService.collection("users").add(userObj);
     } catch (error) {
       setError(error.message);
     }
@@ -38,11 +45,11 @@ const AuthForm = () => {
     <>
       <form onSubmit={onSubmit} className="container">
         <input
-          name="email"
+          name="inputEmail"
           type="email"
           placeholder="Email"
           required
-          value={email}
+          value={inputEmail}
           onChange={onChange}
           className="authInput"
         />

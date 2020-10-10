@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AppRouter from "components/Router";
-import { authService } from "fbase";
+import { authService, dbService } from "fbase";
 
 function App() {
   const [init, setInit] = useState(false);
@@ -20,7 +20,7 @@ function App() {
       setInit(true);
     });
   }, []);
-  const refreshUser = () => {
+  const refreshUser = async () => {
     const user = authService.currentUser;
     setUserObj({
       displayName: user.displayName,
@@ -28,6 +28,17 @@ function App() {
       photoURL: user.photoURL,
       updateProfile: (args) => user.updateProfile(args),
     });
+    await dbService
+      .collection("users")
+      .where("uid", "==", user.uid)
+      .onSnapshot((snapshots) => {
+        snapshots.forEach((doc) =>
+          doc.ref.update({
+            displayName: user.displayName,
+            photoURL: user.photoURL,
+          })
+        );
+      });
   };
   return (
     <>
