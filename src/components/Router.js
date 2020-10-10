@@ -21,7 +21,7 @@ const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
           </div>
         ) : (
           <Route exact path="/">
-            <Auth />
+            <Auth refreshUser={refreshUser} />
           </Route>
         )}
       </Switch>

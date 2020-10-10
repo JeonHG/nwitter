@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { authService, dbService } from "fbase";
 
-const AuthForm = () => {
+const AuthForm = ({ refreshUser }) => {
   const [inputEmail, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [newAccount, setNewAccount] = useState(true);
@@ -25,6 +25,10 @@ const AuthForm = () => {
           inputEmail,
           password
         );
+        await authService.currentUser.updateProfile({
+          displayName: inputEmail,
+        });
+        refreshUser();
       } else {
         data = await authService.signInWithEmailAndPassword(
           inputEmail,
@@ -34,7 +38,7 @@ const AuthForm = () => {
       const {
         user: { email, uid, photoURL, displayName },
       } = data;
-      const userObj = { email, uid, photoURL, displayName };
+      const userObj = { email, uid, photoURL, displayName: inputEmail };
       await dbService.collection("users").add(userObj);
     } catch (error) {
       setError(error.message);

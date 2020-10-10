@@ -59,6 +59,7 @@ export default function Profile({ userObj, refreshUser }) {
     event.preventDefault();
     let photoURL = "";
     if (userObj.displayName !== newDisplayName) {
+      console.log(userObj);
       await userObj.updateProfile({
         displayName: newDisplayName,
       });
