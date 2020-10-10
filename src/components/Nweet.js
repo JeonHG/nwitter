@@ -1,11 +1,22 @@
 import { dbService, storageService } from "fbase";
-import React from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import EpochConverter from "utils/EpochConverter";
 
 const Nweet = ({ nweetObj, isOwner }) => {
+  const [creatorObj, setCreatorObj] = useState("");
+  useEffect(() => {
+    dbService
+      .collection("users")
+      .where("uid", "==", `${nweetObj.creatorId}`)
+      .onSnapshot((snapshot) => {
+        const creatorObj = snapshot.docs.map((doc) => ({
+          ...doc.data(),
+        }))[0];
+        setCreatorObj(creatorObj);
+      });
+  }, []);
   const [editing, setEditing] = useState(false);
   const [newNweet, setNewNweet] = useState(nweetObj.text);
   const onDeleteClick = async () => {
@@ -56,8 +67,11 @@ const Nweet = ({ nweetObj, isOwner }) => {
         </>
       ) : (
         <>
-          <h6>{EpochConverter(nweetObj.createdAt)}</h6>
-          <h4>{nweetObj.text}</h4>
+          <h6 className="nweet__creator">{creatorObj.displayName}</h6>
+          <h4 className="nweet__createdAt">
+            {EpochConverter(nweetObj.createdAt)}
+          </h4>
+          <h2 className="nweet__text">{nweetObj.text}</h2>
           <h6>{nweetObj.creatorId.displayName}</h6>
           {nweetObj.attachmentUrl && (
             <a href={nweetObj.attachmentUrl}>
